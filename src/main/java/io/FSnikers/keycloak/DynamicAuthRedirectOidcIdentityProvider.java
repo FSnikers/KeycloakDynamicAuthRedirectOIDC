@@ -30,12 +30,13 @@ public class DynamicAuthRedirectOidcIdentityProvider extends OIDCIdentityProvide
                         .queryParam("redirect_uri", request.getRedirectUri())
                         .queryParam("response_type", "code")
                         .queryParam("scope", getConfig().getDefaultScope())
-                        .queryParam("state", request.getState().getEncoded());
+                        .queryParam("state", request.getState().getEncoded())
+                        .queryParam("nonce", request.getAuthenticationSession().getClientNote("nonce"));
 
-                logger.infof("Redirecting to custom auth URL: %s", customUri.build().toString());
+                logger.debugf("Redirecting to custom auth URL: %s", customUri.build().toString());
                 return customUri;
             } else {
-                logger.info("No auth_redirect_url found, using default behavior");
+                logger.debugf("No auth_redirect_url found, using default behavior");
                 return super.createAuthorizationUrl(request);
             }
         } catch (Exception e) {
