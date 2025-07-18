@@ -21,8 +21,8 @@ public class DynamicAuthRedirectOidcIdentityProvider extends OIDCIdentityProvide
         try {
             String authRedirectUrl = request.getAuthenticationSession().getClientNote("auth_redirect_url");
 
-            logger.infof("Received auth_redirect_url: %s", authRedirectUrl);
-            logger.infof("Received state: %s", request.getState().getEncoded());
+            logger.debugf("Received auth_redirect_url: %s", authRedirectUrl);
+            logger.debugf("Received state: %s", request.getState().getEncoded());
 
             if (authRedirectUrl != null && !authRedirectUrl.isEmpty()) {
                 UriBuilder customUri = UriBuilder.fromUri(authRedirectUrl)

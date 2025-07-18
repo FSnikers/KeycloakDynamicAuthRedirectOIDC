@@ -18,15 +18,15 @@ public class ConfigurableQueryParamAuthenticator implements Authenticator {
     public void authenticate(AuthenticationFlowContext context) {
         List<String> keysToStore = getConfigParams(context);
 
-        logger.infof("ConfigurableQueryParamAuthenticator — storing query params: %s", keysToStore);
+        logger.debugf("ConfigurableQueryParamAuthenticator — storing query params: %s", keysToStore);
 
         for (String key : keysToStore) {
             String val = context.getUriInfo().getQueryParameters().getFirst(key);
-            logger.infof("Checking query param: %s = %s", key, val);
+            logger.debugf("Checking query param: %s = %s", key, val);
 
             if (val != null) {
                 context.getAuthenticationSession().setClientNote(key, val);
-                logger.infof("Saved to client note: %s = %s", key, val);
+                logger.debugf("Saved to client note: %s = %s", key, val);
             }
         }
 
@@ -55,7 +55,7 @@ public class ConfigurableQueryParamAuthenticator implements Authenticator {
                 : null;
 
         if (configVal != null && !configVal.isEmpty()) {
-            logger.infof("Custom queryParams from config: %s", configVal);
+            logger.debugf("Custom queryParams from config: %s", configVal);
             return Arrays.asList(configVal.split(","));
         }
 
